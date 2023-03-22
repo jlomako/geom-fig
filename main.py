@@ -2,13 +2,19 @@
 import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib import cm
 import matplotlib as mpl
 
-st.title("Spirograph")
+st.title("Title")
 
+# get colormaps
 cmap = mpl.cm.summer
+#colours = list(mpl.datad.keys())
+#selected_colour = st.selectbox("Colour", colours, index=0, key="colour")
+#cmap = cm.get_cmap(selected_colour)
+#
 plt.style.use('dark_background')
-#plt.style.use('default')
+# #plt.style.use('default')
 
 num_spirographs = np.random.randint(2, 4)
 
@@ -27,3 +33,5 @@ plt.axis('equal')
 plt.axis('off')
 
 st.pyplot(fig)
+
+st.button("Rerun")
