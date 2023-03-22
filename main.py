@@ -2,23 +2,13 @@
 import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib import cm
 import matplotlib as mpl
 import io
 
-st.title("Title")
-
-# get colormaps
-cmap = mpl.cm.summer
-#colours = list(mpl.datad.keys())
-#selected_colour = st.selectbox("Colour", colours, index=0, key="colour")
-#cmap = cm.get_cmap(selected_colour)
-#
-plt.style.use('dark_background')
-# #plt.style.use('default')
 
 @st.cache_data # caches data for session?
-def create_spyro(number):
+def create_spyro(number, selected):
+    cmap = mpl.colormaps[selected]
     num_spirographs = np.random.randint(2, 4)
     fig = plt.figure()
     for i in range(num_spirographs):
@@ -34,9 +24,19 @@ def create_spyro(number):
     return fig
 
 
-if st.button("Create"):
-    #create_spyro(np.random.randint(1, 9999)) # refresh cache with random numbers
-    st.pyplot(create_spyro(np.random.randint(1, 9999)))
+st.title("Spyrograph")
+
+# get colormaps
+colours = ["spring", "summer", "autumn", "winter"]
+selected = st.radio(label="color", options=colours, horizontal=True, label_visibility="hidden")
+
+plt.style.use('dark_background')
+# #plt.style.use('default')
+
+
+if st.button("Create") or selected:
+    # refresh cache with random numbers
+    st.pyplot(create_spyro(np.random.randint(1, 9999), selected))
 
 
 fn = 'image.png'
