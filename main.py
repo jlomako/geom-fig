@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import cm
 import matplotlib as mpl
+import io
 
 st.title("Title")
 
@@ -16,7 +17,7 @@ cmap = mpl.cm.summer
 plt.style.use('dark_background')
 # #plt.style.use('default')
 
-@st.cache_data
+@st.cache_data # caches data for session?
 def create_spyro(number):
     num_spirographs = np.random.randint(2, 4)
     fig = plt.figure()
@@ -30,13 +31,23 @@ def create_spyro(number):
         plt.plot(x, y, c=cmap(i / num_spirographs), linewidth=0.3)
     plt.axis('equal')
     plt.axis('off')
-    st.pyplot(fig)
+    return fig
 
 
 if st.button("Create"):
-    create_spyro(np.random.randint(1, 9999)) # refresh cache with random numbers
+    #create_spyro(np.random.randint(1, 9999)) # refresh cache with random numbers
+    st.pyplot(create_spyro(np.random.randint(1, 9999)))
 
-if st.button("Download"):
-    None
+
+fn = 'image.png'
+img = io.BytesIO()
+plt.savefig(img, format='png')
+
+st.download_button(
+    label="Save",
+    data=img,
+    file_name=fn,
+    mime="image/png"
+)
 
 
