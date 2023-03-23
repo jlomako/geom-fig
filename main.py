@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 import io
 
-@st.cache_data # caches data for session?
+@st.cache_data(ttl=3600) # clear cache after 1h
 def create_spyro(number, selected):
     cmap = mpl.colormaps[selected]
     num_spirographs = np.random.randint(2, 4)
