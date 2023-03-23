@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 import io
 
-
 @st.cache_data # caches data for session?
 def create_spyro(number, selected):
     cmap = mpl.colormaps[selected]
@@ -24,19 +23,20 @@ def create_spyro(number, selected):
     return fig
 
 
-st.title("Spyrograph")
+st.header("Spirograph")
+st.subheader("Generate random geometric figures")
 
 # get colormaps
-colours = ["spring", "summer", "autumn", "winter"]
-selected = st.radio(label="color", options=colours, horizontal=True, label_visibility="hidden")
+colours = ["spring", "summer", "autumn", "winter", "gray", "ocean"]
+selected = st.radio(label="color", options=colours, index=1, horizontal=True, label_visibility="hidden")
 
 plt.style.use('dark_background')
 # #plt.style.use('default')
 
 
-if st.button("Create") or selected:
-    # refresh cache with random numbers
-    st.pyplot(create_spyro(np.random.randint(1, 9999), selected))
+if st.button("Refresh") or selected:
+    # random floats to refresh cache
+    st.pyplot(create_spyro(np.random.random(), selected))
 
 
 fn = 'image.png'
@@ -49,5 +49,4 @@ st.download_button(
     file_name=fn,
     mime="image/png"
 )
-
 
